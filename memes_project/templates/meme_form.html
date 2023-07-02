@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div>
+  <label style="color:white; background:blue;"background:blue; for="caption1">Caption 1:</label>
+  <input type="text" name="caption1" id="caption1">
+  <label style="color:white; background:blue;"background:blue; for="caption1_fg_color">Caption 1 Foreground Color:</label>
+  <input type="color" name="caption1_fg_color" id="caption1_fg_color">
+  <label style="color:white; background:blue;"background:blue; for="caption1_bg_color">Caption 1 Background Color:</label>
+  <input type="color" name="caption1_bg_color" id="caption1_bg_color">
+  <label style="color:white; background:blue;" for="caption1_position">Caption 1 Position:</label>
+  <select name="caption1_position" id="caption1_position">
+    <option value="top">Top</option>
+    <option value="bottom">Bottom</option>
+    <option value="center">Center</option>
+  </select>
+</div>
+
+<div>
+  <label style="color:white; background:blue;"background:blue; for="caption2">Caption 2:</label>
+  <input type="text" name="caption2" id="caption2">
+  <label style="color:white; background:blue;"background:blue; for="caption2_fg_color">Caption 2 Foreground Color:</label>
+  <input type="color" name="caption2_fg_color" id="caption2_fg_color">
+  <label style="color:white; background:blue;"background:blue; for="caption2_bg_color">Caption 2 Background Color:</label>
+  <input type="color" name="caption2_bg_color" id="caption2_bg_color">
+  <label style="color:white; background:blue;"background:blue; for="caption2_position">Caption 2 Position:</label>
+  <select name="caption2_position" id="caption2_position">
+    <option value="top">Top</option>
+    <option value="bottom">Bottom</option>
+    <option value="center">Center</option>
+  </select>
+</div>
+
+<div>
+  <label style="color:white; background:blue;"background:blue; for="caption3">Caption 3:</label>
+  <input type="text" name="caption3" id="caption3">
+  <label style="color:white; background:blue;"background:blue; for="caption3_fg_color">Caption 3 Foreground Color:</label>
+  <input type="color" name="caption3_fg_color" id="caption3_fg_color">
+  <label style="color:white; background:blue;"background:blue; for="caption3_bg_color">Caption 3 Background Color:</label>
+  <input type="color" name="caption3_bg_color" id="caption3_bg_color">
+  <label style="color:white; background:blue;"background:blue; for="caption3_position">Caption 3 Position:</label>
+  <select name="caption3_position" id="caption3_position">
+    <option value="top">Top</option>
+    <option value="bottom">Bottom</option>
+    <option value="center">Center</option>
+  </select>
+</div> 
+<div>
+  <input style="background: steelblue;" type="file" name="image" id="image">
+</div>
+
+<br>
+<div>
+  <button style="background: tomato; color:white;"type="submit">Generate Meme</button>
+</div>
+</br>
+</form>
+
+{% endblock body %}

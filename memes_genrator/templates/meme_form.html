@@ -1,0 +1,216 @@
+{% extends 'base.html' %} {% block body %} {% csrf_token %}
+<style>
+  body {
+    background: #2e2b2b;
+  }
+  .myclass {
+    text-align: center;
+  }
+</style>
+<marquee direction="right">
+  <h1 style="color: white">
+    ................................Warnings........................
+  </h1>
+  <h1 style="color: red">
+    **Connect your device with internet to use defult img**
+  </h1>
+  <h1 style="color: red">
+    **defult img is only for defult use it can not be downloadable**..
+  </h1>
+  <h1 style="color: green">
+    use choose File option to make memes and enjoy by downloading...
+  </h1>
+</marquee>
+<div class="myclass">
+  <div class="owl-carousel">
+    <div class="image-container">
+      <input type="file" id="imageUpload" />
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="caption-item">
+      <label for="caption1">Caption 1:</label>
+      <input type="text" class="caption-input" />
+      <input type="color" class="font-color-input" />
+      <input type="color" class="bg-color-input" />
+      <select class="position-select">
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>
+        <option value="center">Center</option>
+      </select>
+      <button style="background-color: turquoise" class="apply-changes-button">
+        Apply Changes
+      </button>
+    </div>
+
+    <div class="caption-item">
+      <label for="caption2">Caption 2:</label>
+      <input type="text" class="caption-input" />
+      <input type="color" class="font-color-input" />
+      <input type="color" class="bg-color-input" />
+      <select class="position-select">
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>
+        <option value="center">Center</option>
+      </select>
+      <button style="background-color: turquoise" class="apply-changes-button">
+        Apply Changes
+      </button>
+    </div>
+
+    <div class="caption-item">
+      <label for="caption3">Caption 3:</label>
+      <input type="text" class="caption-input" />
+      <input type="color" class="font-color-input" />
+      <input type="color" class="bg-color-input" />
+      <select class="position-select">
+        <option value="top">Top</option>
+        <option value="bottom">Bottom</option>
+        <option value="center">Center</option>
+      </select>
+      <button style="background-color: turquoise" class="apply-changes-button">
+        Apply Changes
+      </button>
+    </div>
+
+    <button style="background-color: green; color: white" id="downloadButton">
+      Download Image
+    </button>
+    <button style="background-color: red; color: white" id="resetButton">
+      Reset
+    </button>
+    <button
+      style="background-color: yellow; color: black"
+      id="defaultImageButton"
+    >
+      Default Image
+    </button>
+  </div>
+  {% endblock body %} {% block script %}
+  <script>
+    // scripts for mycode ...................
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var image;
+    var captions = [];
+    // event listner..........................
+    var imageUpload = document.getElementById("imageUpload");
+    imageUpload.addEventListener("change", handleImageUpload);
+
+    // Add event listener for deflt img btn.....
+    var defaultImageButton = document.getElementById("defaultImageButton");
+    defaultImageButton.addEventListener("click", function () {
+      var defaultImageURL =
+        "https://i.pinimg.com/474x/33/23/94/33239488ede380d4f02386460ed3adf3.jpg";
+      loadDefaultImage(defaultImageURL);
+    });
+
+    function handleImageUpload(event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        image = new Image();
+        image.onload = function () {
+          canvas.width = image.width;
+          canvas.height = image.height;
+          ctx.drawImage(image, 0, 0);
+          drawCaptions();
+        };
+        image.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function loadDefaultImage(url) {
+      image = new Image();
+      image.onload = function () {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+        drawCaptions();
+      };
+      image.src = url;
+    }
+
+    // Add event listeners to aply changs btn............
+    var applyChangesButtons = document.querySelectorAll(
+      ".apply-changes-button"
+    );
+    applyChangesButtons.forEach(function (applyChangesButton) {
+      applyChangesButton.addEventListener("click", function (event) {
+        applyChanges(event.target);
+      });
+    });
+
+    function applyChanges(button) {
+      var captionItem = button.closest(".caption-item");
+      var captionInput = captionItem.querySelector(".caption-input");
+      var fontColorInput = captionItem.querySelector(".font-color-input");
+      var bgColorInput = captionItem.querySelector(".bg-color-input");
+      var positionSelect = captionItem.querySelector(".position-select");
+
+      var caption = captionInput.value;
+      var fontColor = fontColorInput.value;
+      var bgColor = bgColorInput.value;
+      var position = positionSelect.value;
+
+      captions.push({
+        caption: caption,
+        fontColor: fontColor,
+        bgColor: bgColor,
+        position: position,
+      });
+
+      drawCaptions();
+    }
+
+    function drawCaptions() {
+      // Clear previous captions
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+
+      // Draw all captions
+      captions.forEach(function (captionObj) {
+        var caption = captionObj.caption;
+        var fontColor = captionObj.fontColor;
+        var bgColor = captionObj.bgColor;
+        var position = captionObj.position;
+
+        if (caption) {
+          ctx.font = "24px Arial";
+          ctx.fillStyle = fontColor;
+          ctx.fillRect(10, getPositionY(position), canvas.width - 20, 30);
+          ctx.fillStyle = bgColor;
+          ctx.fillText(caption, 20, getPositionY(position) + 20);
+        }
+      });
+    }
+
+    function getPositionY(position) {
+      if (position === "top") {
+        return 50;
+      } else if (position === "bottom") {
+        return canvas.height - 50;
+      } else {
+        return canvas.height / 2;
+      }
+    }
+
+    // Add event listener to reset button
+    var resetButton = document.getElementById("resetButton");
+    resetButton.addEventListener("click", function () {
+      captions = [];
+      drawCaptions();
+    });
+
+    // Add event listener to download button
+    var downloadButton = document.getElementById("downloadButton");
+    downloadButton.addEventListener("click", function () {
+      var link = document.createElement("a");
+      link.href = canvas.toDataURL();
+      link.download = "image_with_captions.png";
+      link.click();
+    });
+  </script>
+  {% endblock script %}
+</div>

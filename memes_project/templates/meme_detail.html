@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Generated Meme</h1>
+<img src="{{ new_image }}" alt="Generated Meme">
+
+<button style="color: unset; background: darksalmon;" id="downloadButton">Download Meme</button>
+{% endblock body %}
+
+{% block script %}
+<script>
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        // Get the URL of the image to download
+        var imageUrl = '{{ new_image }}';
+        // Create an anchor element
+        var link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = 'meme.jpg'; 
+
+        // triged the download
+        link.click();
+    });
+</script>
+{% endblock script %}
