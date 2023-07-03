@@ -1,5 +1,5 @@
 # two-memes-genrator-projects
-in this repo bundle there is two web memes genrator project, 1 project- 90%js, 15%html,5%py,  2-memes_gen- 90%py+15%html+5%js
+In this repo bundle there is two web memes genrator project, 1 project- 85%js, 10%html,5%py,  2-memes_gen- 85%py+10%html+5%js
 
 # 1 First project project (memes_genrator)
 
